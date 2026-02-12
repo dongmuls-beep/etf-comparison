@@ -333,10 +333,20 @@ if __name__ == "__main__":
         # 3. Process
         final_data = process_data(targets, excel_file)
         
+
         # 4. Upload
         if final_data:
             update_google_sheets(final_data)
         else:
             print("No matching data.")
+            
+        # 5. Cleanup
+        try:
+            if os.path.exists(excel_file):
+                os.remove(excel_file)
+                print(f"Deleted utilized Excel file: {excel_file}")
+        except Exception as e:
+            print(f"Error deleting Excel file: {e}")
+            
     else:
         print("Failed to download Excel.")
