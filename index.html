@@ -20,7 +20,7 @@
     <main class="container">
         <header class="header">
             <h1>ETF 실부담비용 비교</h1>
-            <p class="subtitle">디시인사이드 자산분배갤러리</p>
+            <p class="subtitle">한국 증시에 상장된 각종 인덱스 ETF의 실부담비용을 비교해보세요.</p>
         </header>
 
         <div class="glass-panel">
@@ -53,13 +53,13 @@
                 </table>
             </div>
 
-            * 데이터 출처: 금융투자협회 전자공시 (매월 업데이트) <br>
+            <br>* 데이터 출처: 금융투자협회 전자공시 (매월 업데이트) <br>
             * 실부담비용 = TER(총보수+기타비용) + 매매·중계수수료율
         </div>
 
         <!-- Google AdSense Placeholder -->
         <div class="adsense-container" style="margin-top: 2rem; text-align: center;">
-            <p style="color: #888; font-size: 0.8rem;">광고 영역 (배포 후 활성화됩니다)</p>
+            <!-- <p style="color: #888; font-size: 0.8rem;">광고 영역 (배포 후 활성화됩니다)</p> -->
             <!-- 아래 data-ad-client와 data-ad-slot을 본인 애드센스 코드로 교체하세요 -->
             <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
                 data-ad-slot="YYYYYYYYYY" data-ad-format="auto" data-full-width-responsive="true"></ins>
@@ -69,6 +69,69 @@
         </div>
 
     </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <h3 class="footer-title">면책 고지 및 데이터 출처</h3>
+            <div class="footer-disclaimer">
+                <p>본 사이트의 수치는 상단에 표기된 '최근 업데이트' 날짜를 기준으로 금융투자협회 전자공시 자료를 반영하고 있습니다.</p>
+                <p>제공되는 데이터는 단순 참고용이며, 수집 시점의 차이나 공시 지연 등으로 인해 실제 수치와 다를 수 있으므로 정보의 정확성을 보장하지 않습니다.</p>
+                <p>모든 투자의 최종 판단과 그에 따른 책임은 투자자 본인에게 있으며, 본 사이트는 투자 결과에 대해 어떠한 법적 책임도 지지 않습니다.</p>
+            </div>
+            <div class="footer-links">
+                <a href="#" id="privacyPolicyLink"
+                    onclick="document.getElementById('privacyModal').classList.add('active'); return false;">개인정보처리방침</a>
+            </div>
+            <div class="footer-copyright">
+                <p>Copyright &copy; 2026 etfsave.life All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Privacy Policy Modal -->
+    <div class="modal-overlay" id="privacyModal" onclick="this.classList.remove('active');">
+        <div class="modal-content" onclick="event.stopPropagation();">
+            <h2 class="modal-title">개인정보처리방침 (Privacy Policy)</h2>
+
+            <div class="modal-body">
+                <div class="policy-section">
+                    <h4>1. 개인정보의 처리 목적</h4>
+                    <p>본 사이트는 이용자의 별도 회원가입 절차가 없으며, 어떠한 개인정보도 수집하거나 저장하지 않습니다.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h4>2. 제3자 서비스 및 쿠키(Cookie) 사용</h4>
+                    <p>본 사이트는 Google에서 제공하는 광고 서비스인 Google AdSense를 이용합니다.</p>
+                    <p>Google은 쿠키를 사용하여 사용자의 본 사이트 및 기타 사이트 방문 기록을 바탕으로 맞춤형 광고를 게재합니다.</p>
+                    <p>사용자는 <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Google의
+                            광고 설정</a>을 방문하여 맞춤설정 광고를 거부할 수 있습니다.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h4>3. 데이터 보안</h4>
+                    <p>본 사이트는 이용자의 개인정보를 수집하지 않으므로 유출될 정보 자체가 존재하지 않으나, 이용자의 안전한 사이트 이용을 위해 HTTPS 보안 프로토콜을 적용하고 있습니다.
+                    </p>
+                </div>
+
+                <div class="policy-section">
+                    <h4>4. 외부 링크</h4>
+                    <p>본 사이트는 금융투자협회 등 외부 사이트로의 링크를 포함할 수 있습니다. 링크된 외부 웹사이트의 개인정보 보호정책은 본 사이트와 무관하므로 해당 사이트의 정책을 확인하시기
+                        바랍니다.</p>
+                </div>
+
+                <div class="policy-section">
+                    <h4>5. 개인정보 보호책임자</h4>
+                    <p>본 사이트의 서비스 이용 중 발생하는 문의사항은 아래의 연락처로 문의해 주시기 바랍니다.</p>
+                    <p class="contact-email">이메일: dongmuls@gmaill.com</p>
+                </div>
+            </div>
+
+            <button class="modal-close-btn"
+                onclick="document.getElementById('privacyModal').classList.remove('active');">
+                닫기
+            </button>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
