@@ -1,0 +1,456 @@
+:root {
+    --primary-color: #007aff;
+    --text-color: #1d1d1f;
+    --text-secondary: #86868b;
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-color);
+    background-color: #f5f5f7;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.background-gradient {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    z-index: -1;
+    opacity: 0.3;
+    /* Reduced opacity as requested */
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Container */
+.container {
+    width: 90%;
+    max-width: 1000px;
+    padding: 2rem;
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* ... (Header styles skipped for brevity if not changing) ... */
+
+/* ... */
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    background: linear-gradient(135deg, #1d1d1f 0%, #434344 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+/* Glass Panel */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    padding: 2rem;
+    overflow: hidden;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    justify-content: flex-end;
+    /* Align date to right */
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.glass-button {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 0.6rem 1.2rem;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--primary-color);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.glass-button:hover {
+    background: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.glass-button:active {
+    transform: translateY(0);
+}
+
+.last-updated {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* Table */
+.table-container {
+    overflow-x: auto;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+    /* Keep numbers on one line */
+}
+
+th,
+td {
+    padding: 0.8rem 0.5rem;
+    /* Reduced horizontal padding */
+    text-align: left;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Allow Name column to wrap if needed */
+td:nth-child(3),
+th:nth-child(3) {
+    white-space: normal;
+    min-width: 120px;
+}
+
+th {
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    /* Slightly smaller */
+    text-align: center;
+    /* Force center alignment */
+}
+
+td {
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.text-right {
+    text-align: right;
+}
+
+.highlight {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Footer Note */
+.footer-note {
+    margin-top: 1.5rem;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.loading-text {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+}
+
+/* Clickable Cells */
+.clickable {
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.clickable:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+/* Toast Notification */
+.toast {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    text-align: center;
+    border-radius: 50px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    bottom: 30px;
+    font-size: 14px;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: opacity 0.5s, bottom 0.5s;
+}
+
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+    bottom: 50px;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Formula Container */
+.formula-container {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.formula-container h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.formula-item {
+    margin-bottom: 1rem;
+    padding-left: 1rem;
+    border-left: 3px solid #ddd;
+}
+
+.formula-item:last-child {
+    margin-bottom: 0;
+}
+
+.formula-item p {
+    margin: 0.3rem 0 0 0;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+.badge-green {
+    color: #2ecc71;
+    font-weight: 700;
+}
+
+.badge-blue {
+    color: #3498db;
+    font-weight: 700;
+}
+
+.badge-red {
+    color: #e74c3c;
+    font-weight: 700;
+}
+
+.text-green {
+    color: #2ecc71;
+    font-weight: 600;
+}
+
+.text-blue {
+    color: #3498db;
+    font-weight: 600;
+}
+
+.note {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* Filter Tabs */
+.tabs-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+    justify-content: center;
+}
+
+.tab-button {
+    padding: 0.6rem 1.2rem;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    /* Darker border */
+    background: rgba(255, 255, 255, 0.6);
+    /* More opaque white */
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 0.95rem;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    /* Subtle shadow */
+}
+
+.tab-button:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tab-button.active {
+    background: var(--primary-color, #3498db);
+    /* Fallback or variable */
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+/* Responsive */
+/* Responsive Card Layout */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+        width: 95%;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .glass-panel {
+        padding: 1rem;
+    }
+
+    /* Force table to not be like tables anymore */
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+        display: block;
+    }
+
+    /* Hide table headers (but not display: none;, for accessibility) */
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr {
+        margin-bottom: 1rem;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.6);
+        padding: 1rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    td {
+        /* Behave like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        /* Flexbox for layout */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-align: right;
+        /* Removed huge padding-left */
+    }
+
+    td:before {
+        /* Now like a table header */
+        /* Flex item */
+        font-weight: bold;
+        color: var(--text-secondary);
+        content: attr(data-label);
+        text-align: left;
+        padding-right: 1rem;
+        white-space: nowrap;
+        flex-shrink: 0;
+        /* Prevent label from shrinking */
+    }
+
+    td:last-child {
+        border-bottom: 0;
+    }
+
+    /* Specific adjustments for cell content */
+    td.text-right {
+        text-align: right;
+    }
+
+    /* Allow name to wrap but align right */
+    td:nth-child(2) {
+        text-align: right;
+        white-space: normal;
+        /* Ensure value wraps if needed */
+        word-break: break-word;
+        max-width: 65%;
+        /* Limit width of name to prevent squeezing label too much */
+    }
+}
