@@ -1,1 +1,0 @@
-<ul id="srchFundType" class="w2checkbox detail_check_list1"></ul>
