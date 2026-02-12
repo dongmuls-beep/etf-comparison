@@ -7,6 +7,10 @@
     --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
 }
 
+html {
+    overflow-x: hidden;
+}
+
 body {
     margin: 0;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -23,14 +27,13 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
     z-index: -1;
     opacity: 0.3;
-    /* Reduced opacity as requested */
 }
 
 @keyframes gradientBG {
@@ -53,6 +56,7 @@ body {
     max-width: 1000px;
     padding: 2rem;
     animation: fadeIn 0.8s ease-out;
+    box-sizing: border-box;
 }
 
 /* ... (Header styles skipped for brevity if not changing) ... */
@@ -98,6 +102,9 @@ h1 {
     box-shadow: var(--glass-shadow);
     padding: 2rem;
     overflow: hidden;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    box-sizing: border-box;
 }
 
 /* Controls */
