@@ -4,7 +4,7 @@ const GAS_API_URL = "./data.json";
 
 // Global State
 let allData = [];
-let currentCategory = 'all';
+let currentCategory = '';
 let currentLanguage = 'ko'; // Default language
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -185,15 +185,9 @@ function renderTabs(data) {
 
     tabsContainer.innerHTML = '';
 
-    // 'All' button with translation
-    const allBtn = document.createElement('button');
-    allBtn.className = `tab-button ${currentCategory === 'all' ? 'active' : ''}`;
-    allBtn.textContent = getTranslation('tab_all') || '전체';
-    allBtn.dataset.category = 'all';
-    allBtn.addEventListener('click', () => {
-        setCategory('all', allBtn);
-    });
-    tabsContainer.appendChild(allBtn);
+    if (categories.length > 0 && (!currentCategory || !categories.includes(currentCategory))) {
+        currentCategory = categories[0];
+    }
 
     categories.forEach(cat => {
         const btn = document.createElement('button');
