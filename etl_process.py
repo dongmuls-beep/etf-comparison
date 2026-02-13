@@ -288,7 +288,7 @@ def process_data(managed_df, file_path):
                 '총보수': total,
                 '기타비용': other,
                 '매매중계수수료': sell,
-                '실부담비용': real_cost
+                '실부담비용': round(real_cost, 4)
             })
             
         print(f"Processed {len(results)} items.")
