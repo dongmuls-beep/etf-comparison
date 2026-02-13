@@ -61,6 +61,15 @@ function updateLanguage(lang) {
         }
     });
 
+    // Update Page Title and Meta Description if keys exist
+    if (translations[lang]['seo_title']) {
+        document.title = translations[lang]['seo_title'];
+    }
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc && translations[lang]['seo_description']) {
+        metaDesc.setAttribute('content', translations[lang]['seo_description']);
+    }
+
     // Re-render table to update data-labels used in Mobile View
     if (allData.length > 0) {
         renderTabs(allData); // Update 'All' tab text
