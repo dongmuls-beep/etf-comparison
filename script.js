@@ -132,7 +132,7 @@ function renderTable(data) {
             <td data-label="종목명" style="font-weight: 500;"><a href="${naverUrl}" target="_blank" rel="noopener noreferrer" class="stock-link" title="네이버 금융에서 보기">${item['종목명'] || '-'}</a></td>
             <td class="text-right" data-label="총보수">${formatPercent(item['총보수'])}</td>
             <td class="text-right" data-label="기타비용">${formatPercent(item['기타비용'])}</td>
-            <td class="text-right" data-label="매매중계">${formatPercent(item['매매중계수수료'])}</td>
+            <td class="text-right" data-label="매매중개">${formatPercent(item['매매중개수수료'])}</td>
             <td class="text-right highlight" data-label="실부담비용(%)">${formatPercent(item['실부담비용'])}</td>
         `;
 

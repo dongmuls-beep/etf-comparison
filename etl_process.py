@@ -265,7 +265,7 @@ def process_data(managed_df, file_path):
             
             col_other = next((c for c in df.columns if '기타' in c and '비용' in c), None) # 기타비용(B)
             
-            col_sell = next((c for c in df.columns if '매매' in c and '수수료' in c), None) # 매매·중계수수료율(D)
+            col_sell = next((c for c in df.columns if '매매' in c and '수수료' in c), None) # 매매·중개수수료율(D)
             
             # Extract Values
             total = p_float(row.get(col_total, 0)) if col_total else 0
@@ -287,7 +287,7 @@ def process_data(managed_df, file_path):
                 '종목명': target_name,
                 '총보수': total,
                 '기타비용': other,
-                '매매중계수수료': sell,
+                '매매중개수수료': sell,
                 '실부담비용': round(real_cost, 4)
             })
             
