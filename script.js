@@ -2,6 +2,17 @@
 const I18N_DIR = "./i18n";
 const SUPPORTED_LANGS = ["ko", "vi", "zh", "en", "ja", "th", "tl", "km"];
 const DEFAULT_LANG = "ko";
+const SITE_URL = "https://etfsave.life/";
+const LANGUAGE_META = {
+    ko: { htmlLang: "ko-KR", ogLocale: "ko_KR" },
+    vi: { htmlLang: "vi-VN", ogLocale: "vi_VN" },
+    zh: { htmlLang: "zh-CN", ogLocale: "zh_CN" },
+    en: { htmlLang: "en-US", ogLocale: "en_US" },
+    ja: { htmlLang: "ja-JP", ogLocale: "ja_JP" },
+    th: { htmlLang: "th-TH", ogLocale: "th_TH" },
+    tl: { htmlLang: "fil-PH", ogLocale: "tl_PH" },
+    km: { htmlLang: "km-KH", ogLocale: "km_KH" },
+};
 
 const i18nCache = new Map();
 
@@ -38,22 +49,25 @@ async function initApp() {
 
 async function initLanguage() {
     const selector = document.getElementById("languageSelect");
+    const urlLang = getLanguageFromUrl();
     const savedLang = localStorage.getItem("site_language");
     const browserLang = (navigator.language || DEFAULT_LANG).slice(0, 2).toLowerCase();
 
-    const initialLang = SUPPORTED_LANGS.includes(savedLang)
-        ? savedLang
-        : (SUPPORTED_LANGS.includes(browserLang) ? browserLang : DEFAULT_LANG);
+    const initialLang = SUPPORTED_LANGS.includes(urlLang)
+        ? urlLang
+        : (SUPPORTED_LANGS.includes(savedLang)
+            ? savedLang
+            : (SUPPORTED_LANGS.includes(browserLang) ? browserLang : DEFAULT_LANG));
 
     if (selector) {
         selector.value = initialLang;
         selector.addEventListener("change", async (event) => {
             const value = event.target.value;
-            await updateLanguage(value, { rerender: true });
+            await updateLanguage(value, { rerender: true, syncUrl: true, historyMode: "replace" });
         });
     }
 
-    await updateLanguage(initialLang, { rerender: false });
+    await updateLanguage(initialLang, { rerender: false, syncUrl: true, historyMode: "replace" });
 }
 
 async function loadLanguagePack(lang) {
@@ -84,15 +98,20 @@ async function loadLanguagePack(lang) {
 }
 
 async function updateLanguage(lang, options = {}) {
-    const { rerender = true } = options;
+    const { rerender = true, syncUrl = false, historyMode = "replace" } = options;
     const normalized = SUPPORTED_LANGS.includes(lang) ? lang : DEFAULT_LANG;
     const pack = await loadLanguagePack(normalized);
+    const langMeta = getLanguageMeta(normalized);
 
     currentLanguage = normalized;
     currentTranslations = pack;
 
     localStorage.setItem("site_language", currentLanguage);
-    document.documentElement.lang = currentLanguage;
+    document.documentElement.lang = langMeta.htmlLang;
+
+    if (syncUrl) {
+        syncLanguageParam(currentLanguage, historyMode);
+    }
 
     applyTranslations();
     applySeoTranslations();
@@ -124,6 +143,11 @@ function applyTranslations() {
 function applySeoTranslations() {
     const seoTitle = getTranslation("seo_title");
     const seoDescription = getTranslation("seo_description");
+    const seoKeywords = getTranslation("seo_keywords");
+    const seoJsonldName = getTranslation("seo_jsonld_name");
+    const seoJsonldDescription = getTranslation("seo_jsonld_description");
+    const langMeta = getLanguageMeta(currentLanguage);
+    const canonicalUrl = buildCanonicalUrlForLanguage(currentLanguage);
 
     if (seoTitle && seoTitle !== "seo_title") {
         document.title = seoTitle;
@@ -143,6 +167,102 @@ function applySeoTranslations() {
         if (ogDesc) ogDesc.setAttribute("content", seoDescription);
         if (twDesc) twDesc.setAttribute("content", seoDescription);
     }
+
+    if (seoKeywords && seoKeywords !== "seo_keywords") {
+        const keywords = document.querySelector('meta[name="keywords"]');
+        if (keywords) keywords.setAttribute("content", seoKeywords);
+    }
+
+    const canonical = document.querySelector('link[rel="canonical"]');
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    const twUrl = document.querySelector('meta[name="twitter:url"]');
+    const ogLocale = document.querySelector('meta[property="og:locale"]');
+    const contentLanguage = document.querySelector('meta[name="content-language"]');
+
+    if (canonical) canonical.setAttribute("href", canonicalUrl);
+    if (ogUrl) ogUrl.setAttribute("content", canonicalUrl);
+    if (twUrl) twUrl.setAttribute("content", canonicalUrl);
+    if (ogLocale) ogLocale.setAttribute("content", langMeta.ogLocale);
+    if (contentLanguage) contentLanguage.setAttribute("content", langMeta.htmlLang);
+
+    updateStructuredData({
+        language: langMeta.htmlLang,
+        url: canonicalUrl,
+        appName: seoJsonldName && seoJsonldName !== "seo_jsonld_name"
+            ? seoJsonldName
+            : (seoTitle !== "seo_title" ? seoTitle : "ETF Real Cost Comparison"),
+        description: seoJsonldDescription && seoJsonldDescription !== "seo_jsonld_description"
+            ? seoJsonldDescription
+            : (seoDescription !== "seo_description" ? seoDescription : ""),
+    });
+}
+
+function getLanguageFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const lang = params.get("lang");
+    if (!lang) return null;
+    return SUPPORTED_LANGS.includes(lang) ? lang : null;
+}
+
+function getLanguageMeta(lang) {
+    return LANGUAGE_META[lang] || LANGUAGE_META[DEFAULT_LANG];
+}
+
+function buildCanonicalUrlForLanguage(lang) {
+    const url = new URL(SITE_URL);
+    if (lang && lang !== DEFAULT_LANG) {
+        url.searchParams.set("lang", lang);
+    }
+    return url.toString();
+}
+
+function syncLanguageParam(lang, historyMode = "replace") {
+    const url = new URL(window.location.href);
+    if (lang && lang !== DEFAULT_LANG) {
+        url.searchParams.set("lang", lang);
+    } else {
+        url.searchParams.delete("lang");
+    }
+
+    const nextUrl = `${url.pathname}${url.search}${url.hash}`;
+    if (historyMode === "push") {
+        window.history.pushState({}, "", nextUrl);
+    } else {
+        window.history.replaceState({}, "", nextUrl);
+    }
+}
+
+function updateStructuredData({ language, url, appName, description }) {
+    const structuredDataScript = document.getElementById("structuredData");
+    if (!structuredDataScript) return;
+
+    const structuredData = [
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "ETFSAVE",
+            "url": url,
+            "inLanguage": language,
+            "description": description,
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": appName,
+            "url": url,
+            "applicationCategory": "FinanceApplication",
+            "operatingSystem": "Web",
+            "inLanguage": language,
+            "description": description,
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "KRW",
+            },
+        },
+    ];
+
+    structuredDataScript.textContent = JSON.stringify(structuredData);
 }
 
 function getTranslation(key) {
