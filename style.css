@@ -617,6 +617,149 @@ h1 {
     opacity: 0.96;
 }
 
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: var(--space-4);
+    font-size: 0.82rem;
+    color: var(--text-soft);
+}
+
+.breadcrumbs a {
+    color: var(--text-soft);
+    text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+    color: var(--primary);
+}
+
+.breadcrumbs span[aria-current="page"] {
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.quick-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+}
+
+.secondary-grid {
+    margin-top: var(--space-6);
+}
+
+.quick-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    padding: 1rem;
+}
+
+.quick-card h2,
+.quick-card h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    line-height: 1.35;
+}
+
+.quick-card p {
+    margin: 0 0 0.9rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.btn-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 0.45rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid rgba(11, 87, 208, 0.25);
+    background: var(--primary-soft);
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 0.86rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.btn-link:hover {
+    border-color: var(--primary);
+}
+
+.cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin: 1rem 0 1.2rem;
+}
+
+.controls-split {
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.share-button {
+    min-height: 36px;
+    padding: 0.45rem 0.75rem;
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    background: var(--surface-soft);
+    color: var(--text);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.share-button:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.table-note {
+    margin: 1rem 0 0;
+    font-size: 0.82rem;
+    color: var(--text-soft);
+    line-height: 1.6;
+}
+
+.changelog-list {
+    display: grid;
+    gap: var(--space-4);
+}
+
+.changelog-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    padding: 1rem;
+}
+
+.changelog-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.7rem;
+    margin-bottom: 0.8rem;
+}
+
+.changelog-head h3 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.changelog-head p {
+    margin: 0;
+    color: var(--text-soft);
+    font-size: 0.82rem;
+}
+
 @keyframes fade-in {
     from {
         opacity: 0;
@@ -916,6 +1059,68 @@ h1 {
 
     .adsense-slot {
         min-height: 110px;
+    }
+
+    .controls-split {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .quick-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .cta-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-link {
+        width: 100%;
+    }
+
+    .changelog-table,
+    .changelog-table thead,
+    .changelog-table tbody,
+    .changelog-table th,
+    .changelog-table td,
+    .changelog-table tr {
+        display: table;
+        position: static;
+    }
+
+    .changelog-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .changelog-table thead {
+        display: table-header-group;
+    }
+
+    .changelog-table tbody {
+        display: table-row-group;
+        padding: 0;
+    }
+
+    .changelog-table tr {
+        display: table-row;
+        border: none;
+        padding: 0;
+        margin: 0;
+        background: transparent;
+    }
+
+    .changelog-table td,
+    .changelog-table th {
+        display: table-cell;
+        padding: 0.55rem 0.5rem;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .changelog-table td::before {
+        content: none;
     }
 }
 

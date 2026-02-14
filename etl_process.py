@@ -4,6 +4,8 @@ import json
 import os
 import glob
 import time
+import sys
+from datetime import datetime, timezone, timedelta
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -15,6 +17,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 # Replace with your actual GAS Web App URL
 GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwx4Bee14DASyNTMz5CrYsb4C4TtNldAcWU3ccj1UJaV1uQAF3lYEJQGaAavfXwpVcJ/exec" 
 DOWNLOAD_DIR = os.getcwd() # Current directory for downloads
+UPDATE_META_FILE = "update-meta.json"
 
 def setup_driver():
     """
@@ -298,7 +301,33 @@ def process_data(managed_df, file_path):
         print(f"Error processing Excel: {e}")
         return []
 
+def write_update_meta():
+    """
+    Writes ETL success metadata for frontend "last updated" rendering.
+    """
+    now_kst = datetime.now(timezone(timedelta(hours=9)))
+    payload = {
+        "updatedAt": now_kst.strftime("%Y-%m-%d"),
+        "updatedAtIso": now_kst.isoformat(timespec="seconds"),
+        "timezone": "Asia/Seoul",
+        "status": "success"
+    }
+
+    meta_path = os.path.join(os.getcwd(), UPDATE_META_FILE)
+    try:
+        with open(meta_path, 'w', encoding='utf-8') as f:
+            json.dump(payload, f, ensure_ascii=False, indent=2)
+        print(f"Saved update metadata to {meta_path}")
+        return True
+    except Exception as e:
+        print(f"Error saving update metadata: {e}")
+        return False
+
 def update_google_sheets(data):
+    if not data:
+        print("No data provided for update.")
+        return False
+
     # 1. Save as local JSON (Static Hosting Support)
     try:
         json_path = os.path.join(os.getcwd(), 'data.json')
@@ -307,16 +336,23 @@ def update_google_sheets(data):
         print(f"Saved data to {json_path}")
     except Exception as e:
         print(f"Error saving JSON: {e}")
+        return False
+
+    if not write_update_meta():
+        return False
 
     # 2. Upload to GAS (Optional / Backup)
-    if not data: return
     try:
         resp = requests.post(GAS_WEB_APP_URL, json=data, headers={'Content-Type': 'application/json'})
         print("Update Status:", resp.status_code, resp.text)
     except Exception as e:
         print(f"Update Error: {e}")
 
+    return True
+
 if __name__ == "__main__":
+    exit_code = 0
+
     # 1. Download via Selenium
     excel_file = download_kofia_excel()
     # excel_file = os.path.join(os.getcwd(), '펀드별 보수비용비교_20260211 (1).xls')
@@ -331,9 +367,12 @@ if __name__ == "__main__":
 
         # 4. Upload
         if final_data:
-            update_google_sheets(final_data)
+            if not update_google_sheets(final_data):
+                print("Failed to save ETL outputs.")
+                exit_code = 1
         else:
             print("No matching data.")
+            exit_code = 1
             
         # 5. Cleanup
         try:
@@ -345,3 +384,7 @@ if __name__ == "__main__":
             
     else:
         print("Failed to download Excel.")
+        exit_code = 1
+
+    if exit_code != 0:
+        sys.exit(exit_code)

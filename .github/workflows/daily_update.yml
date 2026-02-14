@@ -27,8 +27,11 @@ jobs:
       - name: Run ETL Script
         run: python etl_process.py
 
+      - name: Build Changelog
+        run: python scripts/build_changelog.py
+
       - name: Commit and Push changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "Auto-update ETF data (Daily)"
-          file_pattern: "data.json"
+          file_pattern: "data.json changelog.json update-meta.json"
