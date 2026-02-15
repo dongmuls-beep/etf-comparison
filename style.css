@@ -903,7 +903,7 @@ h1 {
     }
 
     .header-container {
-        width: calc(100% - 1rem);
+        width: calc(100% - 1.5rem);
     }
 
     .main-nav {
@@ -977,7 +977,7 @@ h1 {
     }
 
     .view-section {
-        padding: 0 0.7rem;
+        padding: 0 1rem;
     }
 
     .header {
@@ -1186,18 +1186,18 @@ h1 {
 /* 480 - 767 */
 @media (min-width: 480px) and (max-width: 767px) {
     .view-section {
-        padding: 0 0.85rem;
+        padding: 0 1.1rem;
     }
 
     .header-container {
-        width: calc(100% - 1.3rem);
+        width: calc(100% - 1.8rem);
     }
 }
 
 /* 320 - 479 */
 @media (max-width: 479px) {
     .header-container {
-        width: calc(100% - 0.75rem);
+        width: calc(100% - 1.2rem);
     }
 
     .language-selector select {
@@ -1211,7 +1211,7 @@ h1 {
     }
 
     .view-section {
-        padding: 0 0.5rem;
+        padding: 0 0.85rem;
     }
 
     .glass-panel,
