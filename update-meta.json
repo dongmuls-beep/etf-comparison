@@ -1,6 +1,6 @@
-﻿{
-    "updatedAt":  "2026-02-14",
-    "updatedAtIso":  "2026-02-14T02:35:12Z",
-    "timezone":  "UTC",
-    "status":  "seeded-from-git"
+{
+  "updatedAt": "2026-02-15",
+  "updatedAtIso": "2026-02-15T09:34:24+09:00",
+  "timezone": "Asia/Seoul",
+  "status": "success"
 }
