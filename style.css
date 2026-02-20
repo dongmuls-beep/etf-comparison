@@ -42,19 +42,14 @@
     box-sizing: border-box;
 }
 
-html {
-    overflow-x: clip;
-}
-
 body {
     margin: 0;
     min-height: 100vh;
     min-height: 100dvh;
-    font-family: "SF Pro Text", "SF Pro Display", "Pretendard", "IBM Plex Sans KR", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    font-family: "Outfit", "Pretendard Variable", "Pretendard", "Apple SD Gothic Neo", sans-serif;
     color: var(--text);
-    background: linear-gradient(165deg, #e7edf7 0%, #ecf2fa 48%, #f5f8fd 100%);
+    background: var(--bg);
     line-height: 1.6;
-    overflow-x: clip;
 }
 
 body.nav-open,
@@ -1004,6 +999,8 @@ h1 {
         transition: right 0.22s ease;
         z-index: 1201;
         padding: 72px 0 1rem;
+        display: flex;
+        flex-direction: column;
     }
 
     .main-nav.active {
@@ -1024,6 +1021,8 @@ h1 {
         padding: 0.75rem 1.2rem;
         border-bottom: 1px solid var(--border);
         font-size: 0.95rem;
+        color: var(--text);
+        white-space: normal;
     }
 
     .nav-link.active::after {
@@ -1031,7 +1030,7 @@ h1 {
     }
 
     .nav-link.active {
-        background: var(--surface-soft);
+        background: rgba(56, 189, 248, 0.15);
         color: var(--primary);
     }
 
@@ -1403,6 +1402,52 @@ h1 {
     }
 }
 
+
+/* Additive UI Refinements */
+.data-table tbody tr {
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.data-table tbody tr:hover {
+    background-color: var(--surface-soft);
+    transform: scale(1.005);
+    box-shadow: var(--glass-shadow-mobile);
+    position: relative;
+    z-index: 10;
+    border-radius: 8px;
+}
+
+h1 {
+    background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 4px 24px rgba(56, 189, 248, 0.2);
+    display: inline-block;
+}
+
+.language-selector select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23a1a1aa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.hamburger-menu span {
+    background: var(--text);
+}
+
+.data-table th {
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-muted);
+}
+
+.table-container {
+    background: var(--glass-bg-desktop);
+}
+
+th,
+td {
+    font-variant-numeric: tabular-nums;
+}
 
 /* Additive UI Refinements */
 .data-table tbody tr {
