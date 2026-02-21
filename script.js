@@ -64,6 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
 async function initApp() {
     initLegacyHashRedirect();
     initNavigation();
+    initSmartHeader();
     initModal();
     initTrackedCtas();
     initShareButton();
@@ -154,6 +155,27 @@ function initNavigation() {
             closeNav();
         }
     });
+}
+
+function initSmartHeader() {
+    const header = document.querySelector(".site-header");
+    if (!header) return;
+
+    let lastScroll = window.scrollY || document.documentElement.scrollTop;
+
+    window.addEventListener("scroll", () => {
+        const currentScroll = window.scrollY || document.documentElement.scrollTop;
+        const body = document.body;
+
+        // Hide only if navigation is closed. Open nav shouldn't let header hide (even if scroll accidentally triggered)
+        if (currentScroll > lastScroll && currentScroll > 60 && !body.classList.contains("nav-open")) {
+            header.classList.add("header-hidden");
+        } else {
+            header.classList.remove("header-hidden");
+        }
+
+        lastScroll = currentScroll <= 0 ? 0 : currentScroll;
+    }, { passive: true });
 }
 
 function highlightCurrentNav() {
